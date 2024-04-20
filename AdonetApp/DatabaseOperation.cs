@@ -60,5 +60,23 @@ namespace AdonetApp
             connection.Close();//bağlantıyı kapa
             Console.WriteLine("Database bağlantısı koptu");
         }
+
+        public static void InsertStudentGroup()
+        {
+            using (SqlConnection connection = new SqlConnection("Server=.;Database=Education;Integrated Security=true"))
+            {
+                connection.Open();
+
+                string sqlCommandQuery = "Insert Into Groups(Name,StartDate,EndDate,IsActive) values(@Name,@StartDate,@EndDate,@IsActive)";
+                SqlCommand command = new SqlCommand(sqlCommandQuery, connection);
+                command.Parameters.Add("@Name", System.Data.SqlDbType.NVarChar, 50).Value = "Ozz Akademi Elit";
+                command.Parameters.Add("@StartDate", System.Data.SqlDbType.DateTime, 50).Value = DateTime.Now.AddYears(-2);
+                command.Parameters.Add("@EndDate", System.Data.SqlDbType.DateTime, 50).Value = DateTime.Now.AddMonths(10);
+                command.Parameters.Add("@IsActive", System.Data.SqlDbType.Bit).Value = 1;
+
+                command.ExecuteNonQuery();
+
+            }
+        }
     }
 }
